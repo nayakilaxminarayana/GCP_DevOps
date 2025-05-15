@@ -58,8 +58,6 @@ steps:
         echo "REPO_NAME=${REPO_NAME}" > .env
         echo "TEST_VAR1=${_TEST_VAR1}" >> .env
         echo "TEST_VAR2=${_TEST_VAR2}" >> .env
-        echo "BUILD_ID=${BUILD_ID}" >> .env
-        echo "TRIGGER_ID=${BUILD_TRIGGER_ID}" >> .env
         
         echo "Environment file contents:"
         cat .env
