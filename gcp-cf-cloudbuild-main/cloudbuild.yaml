@@ -1,6 +1,3 @@
 steps:
-  - name: 'ubuntu'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - 'echo "Hello, World!"'
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['functions', 'deploy', 'cf-test-cloudbuild', '--source=.']
