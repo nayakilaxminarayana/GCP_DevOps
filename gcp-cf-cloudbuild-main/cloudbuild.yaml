@@ -37,6 +37,5 @@ steps:
           --allow-unauthenticated \
           --entry-point=hello_world \
           --region=us-central1 \
-          --source=.\
-          --service-account=test-user-compute@developer.gserviceaccount.com
+          --source=.
     timeout: '180s'
