@@ -21,18 +21,18 @@
 
 import os
 from flask import jsonify
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 def hello_world(request):
-    """HTTP Cloud Function that reads from environment variables"""
+    """HTTP Cloud Function that reads directly from .env file"""
     return jsonify({
-        'repository': os.getenv('REPO_NAME', 'GCP-DevOps'),
+        'repository': os.getenv('REPO_NAME'),
         'test_variables': {
-            'test1': os.getenv('TEST_VAR1', 'test-1'),
-            'test2': os.getenv('TEST_VAR2', 'test-2')
+            'test1': os.getenv('TEST_VAR1'),
+            'test2': os.getenv('TEST_VAR2')
         },
-        'build_info': {
-            'build_id': os.getenv('BUILD_ID', 'not_available'),
-            'trigger_id': os.getenv('TRIGGER_ID', 'not_available')
-        },
-        'message': 'Environment variables loaded successfully!'
+        'message': 'Variables loaded directly from .env file!'
     })
