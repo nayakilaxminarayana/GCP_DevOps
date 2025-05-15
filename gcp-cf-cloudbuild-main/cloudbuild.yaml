@@ -1,3 +1,16 @@
+# steps:
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   args: ['functions', 'deploy', 'cf-test-cloudbuild', '--source=.']
+
+
 steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['functions', 'deploy', 'cf-test-cloudbuild', '--source=.']
+  # Deploy Python Cloud Function
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: ['gcloud', 'functions', 'deploy', 'hello-world-python',
+           '--runtime', 'python310',
+           '--trigger-http',
+           '--allow-unauthenticated',
+           '--entry-point', 'hello_world',
+           '--region', 'us-central1',
+           '--source', '.']
+    timeout: '120s'
