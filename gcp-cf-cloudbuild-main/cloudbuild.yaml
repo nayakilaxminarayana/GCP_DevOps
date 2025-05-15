@@ -26,6 +26,7 @@ steps:
     args:
       - -c
       - |
+        pwd
         echo "Current directory contents:"
         ls -l
         echo "Deploying function..."
