@@ -3,7 +3,7 @@
 #   args: ['functions', 'deploy', 'cf-test-cloudbuild', '--source=.']
 
 options:
-  logging: NONE
+  logging: CLOUD_LOGGING_ONLY
 
 steps:
   # Deploy Python Cloud Function
