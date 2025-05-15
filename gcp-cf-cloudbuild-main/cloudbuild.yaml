@@ -2,17 +2,38 @@
 # - name: 'gcr.io/cloud-builders/gcloud'
 #   args: ['functions', 'deploy', 'cf-test-cloudbuild', '--source=.']
 
+# options:
+#   logging: CLOUD_LOGGING_ONLY
+
+# steps:
+#   # Deploy Python Cloud Function
+#   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#     args: ['gcloud', 'functions', 'deploy', 'hello-world-python',
+#            '--runtime', 'python310',
+#            '--trigger-http',
+#            '--allow-unauthenticated',
+#            '--entry-point', 'hello_world',
+#            '--region', 'us-central1',
+#            '--source', '.']
+#     timeout: '120s'
+
 options:
   logging: CLOUD_LOGGING_ONLY
 
 steps:
-  # Deploy Python Cloud Function
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    args: ['gcloud', 'functions', 'deploy', 'hello-world-python',
-           '--runtime', 'python310',
-           '--trigger-http',
-           '--allow-unauthenticated',
-           '--entry-point', 'hello_world',
-           '--region', 'us-central1',
-           '--source', '.']
-    timeout: '120s'
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        echo "Current directory contents:"
+        ls -l
+        echo "Deploying function..."
+        gcloud functions deploy hello-world-python \
+          --runtime=python310 \
+          --trigger-http \
+          --allow-unauthenticated \
+          --entry-point=hello_world \
+          --region=us-central1 \
+          --source=.
+    timeout: '180s'
