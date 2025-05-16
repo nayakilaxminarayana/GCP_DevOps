@@ -86,6 +86,6 @@ steps:
     
 availableSecrets:
   secretManager:
-    - versionName: projects/637848627669/secrets/L-GitHub-github-oauthtoken-7bda0f
+    - versionName: projects/637848627669/secrets/L-GitHub-github-oauthtoken-7bda0f/versions/latest
       env: 'MY_SECRET_VALUE'
     
