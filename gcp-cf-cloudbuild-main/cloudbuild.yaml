@@ -40,35 +40,52 @@
 #           --source=.
 #     timeout: '180s'
 
-options:
-  logging: CLOUD_LOGGING_ONLY
+# options:
+#   logging: CLOUD_LOGGING_ONLY
+
+# steps:
+#   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#     entrypoint: bash
+#     args:
+#       - -c
+#       - |
+#         pwd
+#         cd gcp-cf-cloudbuild-main
+#         echo "Current directory contents:"
+#         ls -l
+        
+#         # Create .env file with all required environment variables
+#         echo "REPO_NAME=${REPO_NAME}" > .env
+#         echo "TEST_VAR1=${_TEST_VAR1}" >> .env
+#         echo "TEST_VAR2=${_TEST_VAR2}" >> .env
+        
+#         echo "Environment file contents:"
+#         cat .env
+        
+#         echo "Deploying function..."
+#         gcloud functions deploy hello-world-python \
+#           --runtime=python310 \
+#           --trigger-http \
+#           --allow-unauthenticated \
+#           --entry-point=hello_world \
+#           --region=us-central1 \
+#           --source=. \
+#           --set-env-vars=^:^$(cat .env | tr '\n' ',')
+    # timeout: '180s'
+
 
 steps:
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: bash
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
     args:
-      - -c
+      - '-c'
       - |
-        pwd
-        cd gcp-cf-cloudbuild-main
-        echo "Current directory contents:"
-        ls -l
-        
-        # Create .env file with all required environment variables
-        echo "REPO_NAME=${REPO_NAME}" > .env
-        echo "TEST_VAR1=${_TEST_VAR1}" >> .env
-        echo "TEST_VAR2=${_TEST_VAR2}" >> .env
-        
-        echo "Environment file contents:"
-        cat .env
-        
-        echo "Deploying function..."
-        gcloud functions deploy hello-world-python \
-          --runtime=python310 \
-          --trigger-http \
-          --allow-unauthenticated \
-          --entry-point=hello_world \
-          --region=us-central1 \
-          --source=. \
-          --set-env-vars=^:^$(cat .env | tr '\n' ',')
-    # timeout: '180s'
+        echo "Secret value is: $$MY_SECRET_VALUE"
+        # Your build steps that use the secret
+    secretEnv: ['MY_SECRET_VALUE']
+    
+availableSecrets:
+  secretManager:
+    - versionName: projects/637848627669/secrets/L-GitHub-github-oauthtoken-7bda0f
+      env: 'MY_SECRET_VALUE'
+    
